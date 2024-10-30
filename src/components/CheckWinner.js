@@ -1,4 +1,3 @@
-// checkWinner.js
 export const checkWinner = (board) => {
   const winningCombinations = [
     [0, 1, 2],
@@ -14,8 +13,8 @@ export const checkWinner = (board) => {
   for (let combo of winningCombinations) {
     const [a, b, c] = combo;
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      return board[a]; // Returns 'X' or 'O' for the winner
+      return board[a];
     }
   }
-  return null; // No winner yet
+  return null;
 };

@@ -5,25 +5,36 @@ import './GameBoard.scss';
 import Square from './Square';
 import { checkWinner } from '../CheckWinner';
 import Header from '../Header/Header';
+import WinningLine from '../WinningLine/WinningLine';
 
-const GameBoard = () => {
+const GameBoard = (winningLineClass) => {
   const [board, setBoard] = useState(Array(9).fill(''));
   const [currentPlayer, setCurrentPlayer] = useState('X');
   const [winner, setWinner] = useState(null);
+  const [scores, setScores] = useState({ X: 0, O: 0 });
 
   const chooseSquare = (index) => {
     if (board[index] === '' && !winner) {
-      const updateBoard = board.map((val, i) => (i === index ? currentPlayer : val));
-      setBoard(updateBoard);
+      const updatedBoard = board.map((val, i) => (i === index ? currentPlayer : val));
+      setBoard(updatedBoard);
 
-      const gameWinner = checkWinner(updateBoard);
+      const gameWinner = checkWinner(updatedBoard);
       if (gameWinner) {
         setWinner(gameWinner);
+        updateScore(gameWinner);
       } else {
         setCurrentPlayer((prevPlayer) => (prevPlayer === 'X' ? 'O' : 'X'));
       }
     }
   };
+
+  const updateScore = (winningPlayer) => {
+    setScores((prevScores) => ({
+      ...prevScores,
+      [winningPlayer]: prevScores[winningPlayer] + 1,
+    }));
+  };
+
   const resetGame = () => {
     setBoard(Array(9).fill(''));
     setCurrentPlayer('X');
@@ -32,13 +43,20 @@ const GameBoard = () => {
 
   return (
     <div className="game">
-      <Header resetGame={resetGame} />
-      <div className="turn-indicator">
-        Current Turn: <strong>{currentPlayer}</strong>
-      </div>
+      <Header resetGame={resetGame} scores={scores} currentPlayer={currentPlayer} />
 
       <div className="content">
+        {/* Player X's Board */}
         <div className="player-board">
+          <div className="status-message">
+            {winner
+              ? winner === 'X'
+                ? 'You Win!'
+                : 'You Lose!'
+              : currentPlayer === 'X'
+              ? 'Your Turn'
+              : "Opponent's Turn"}
+          </div>
           <div className="board">
             {[0, 1, 2].map((row) => (
               <div className="row" key={row}>
@@ -47,11 +65,9 @@ const GameBoard = () => {
                   return (
                     <Square
                       key={index}
-                      chooseSquare={() => {
-                        if (currentPlayer === 'X') chooseSquare(index);
-                      }}
+                      chooseSquare={() => currentPlayer === 'X' && chooseSquare(index)}
                       val={board[index]}
-                      disabled={currentPlayer !== 'X'}
+                      disabled={currentPlayer !== 'X' || winner}
                     />
                   );
                 })}
@@ -60,7 +76,17 @@ const GameBoard = () => {
           </div>
         </div>
 
+        {/* Player O's Board */}
         <div className="player-board">
+          <div className="status-message">
+            {winner
+              ? winner === 'O'
+                ? 'You Win!'
+                : 'You Lose!'
+              : currentPlayer === 'O'
+              ? 'Your Turn'
+              : "Opponent's Turn"}
+          </div>
           <div className="board">
             {[0, 1, 2].map((row) => (
               <div className="row" key={row}>
@@ -69,11 +95,9 @@ const GameBoard = () => {
                   return (
                     <Square
                       key={index}
-                      chooseSquare={() => {
-                        if (currentPlayer === 'O') chooseSquare(index);
-                      }}
+                      chooseSquare={() => currentPlayer === 'O' && chooseSquare(index)}
                       val={board[index]}
-                      disabled={currentPlayer !== 'O'}
+                      disabled={currentPlayer !== 'O' || winner}
                     />
                   );
                 })}
@@ -82,6 +106,8 @@ const GameBoard = () => {
           </div>
         </div>
       </div>
+
+      <WinningLine winningLineClass={winningLineClass} />
     </div>
   );
 };
