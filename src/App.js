@@ -1,9 +1,11 @@
-
-import './App.css';
+'use client';
+import Game from './components/Game';
 
 function App() {
   return (
-    <></>
+    <>
+      <Game />
+    </>
   );
 }
 
