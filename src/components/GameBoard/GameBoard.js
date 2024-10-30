@@ -5,42 +5,66 @@ import './GameBoard.scss';
 import Square from './Square';
 
 const GameBoard = () => {
-  const [board, setBoard] = useState(['', '', '', '', '', '', '', '', '']);
+  const [board, setBoard] = useState(Array(9).fill(''));
+  const [currentPlayer, setCurrentPlayer] = useState('X');
+
+  const chooseSquare = (index) => {
+    if (board[index] === '' && currentPlayer) {
+      setBoard((prevBoard) => prevBoard.map((val, i) => (i === index ? currentPlayer : val)));
+
+      setCurrentPlayer((prevPlayer) => (prevPlayer === 'X' ? 'O' : 'X'));
+    }
+  };
 
   return (
     <div className="game">
-      <div className="board">
-        <div className="row">
-          <Square val={board[0]} />
-          <Square val={board[1]} />
-          <Square val={board[2]} />
-        </div>
-        <div className="row">
-          <Square val={board[3]} />
-          <Square val={board[4]} />
-          <Square val={board[5]} />
-        </div>
-        <div className="row">
-          <Square val={board[6]} />
-          <Square val={board[7]} />
-          <Square val={board[8]} />
-        </div>
+      <div className="turn-indicator">
+        Current Turn: <strong>{currentPlayer}</strong>
       </div>
-      <div className="board">
-        <div className="row">
-          <Square val={board[0]} />
-          <Square val={board[1]} />
-          <Square val={board[2]} />
+
+      <div className="content">
+        <div className="player-board">
+          <div className="board">
+            {[0, 1, 2].map((row) => (
+              <div className="row" key={row}>
+                {[0, 1, 2].map((col) => {
+                  const index = row * 3 + col;
+                  return (
+                    <Square
+                      key={index}
+                      chooseSquare={() => {
+                        if (currentPlayer === 'X') chooseSquare(index);
+                      }}
+                      val={board[index]}
+                      disabled={currentPlayer !== 'X'}
+                    />
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="row">
-          <Square val={board[3]} />
-          <Square val={board[4]} />
-          <Square val={board[5]} />
-        </div>
-        <div className="row">
-          <Square val={board[6]} />
-          <Square val={board[7]} />
-          <Square val={board[8]} />
+
+        <div className="player-board">
+          <div className="board">
+            {[0, 1, 2].map((row) => (
+              <div className="row" key={row}>
+                {[0, 1, 2].map((col) => {
+                  const index = row * 3 + col;
+                  return (
+                    <Square
+                      key={index}
+                      chooseSquare={() => {
+                        if (currentPlayer === 'O') chooseSquare(index);
+                      }}
+                      val={board[index]}
+                      disabled={currentPlayer !== 'O'}
+                    />
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
