@@ -1,0 +1,49 @@
+.line {
+  position: absolute;
+  background-color: white;
+}
+
+.line-row-1 {
+  width: 100%;
+  height: 4px;
+  top: 15%;
+}
+.line-row-2 {
+  width: 100%;
+  height: 4px;
+  top: 48%;
+}
+.line-row-3 {
+  width: 100%;
+  height: 4px;
+  top: 83%;
+}
+.line-column-1 {
+  height: 100%;
+  width: 4px;
+  left: 15%;
+}
+.line-column-2 {
+  height: 100%;
+  width: 4px;
+  left: 48%;
+}
+.line-column-3 {
+  height: 100%;
+  width: 4px;
+  left: 83%;
+}
+.line-diagonal-1 {
+  width: 90%;
+  height: 4px;
+  top: 50%;
+  left: 5%;
+  transform: skewY(45deg);
+}
+.line-diagonal-2 {
+  width: 90%;
+  height: 4px;
+  top: 50%;
+  left: 5%;
+  transform: skewY(-45deg);
+}
