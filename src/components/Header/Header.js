@@ -1,7 +1,8 @@
 import React from 'react';
 import './Header.scss';
+import ResetButton from '../ResetButton';
 
-const Header = () => {
+const Header = ({ resetGame }) => {
   return (
     <header className="header">
       <div className="header-content">
@@ -9,7 +10,7 @@ const Header = () => {
         <div className="score-board">
           <div>Player 1 (X)</div>
           <div>Score: 0:1 </div>
-
+          <ResetButton resetGame={resetGame} />
           <div>Player 2 (O)</div>
         </div>
       </div>
