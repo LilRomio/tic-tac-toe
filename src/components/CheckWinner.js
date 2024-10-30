@@ -10,11 +10,9 @@ export const checkWinner = (board) => {
     [2, 4, 6],
   ];
 
-  for (let combo of winningCombinations) {
-    const [a, b, c] = combo;
-    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      return board[a];
-    }
-  }
-  return null;
+  return (
+    winningCombinations
+      .map(([a, b, c]) => board[a] && board[a] === board[b] && board[a] === board[c] && board[a])
+      .find(Boolean) || null
+  );
 };
