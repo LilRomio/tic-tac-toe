@@ -2,22 +2,16 @@ import React from 'react';
 import Square from '../Square/Square';
 import './PlayerBoard.scss';
 import WinningLine from '../WinningLine/WinningLine';
+import { getWinnerMessages } from '../../utilities/getWinnerMessages';
+import { useGameStore } from '../../stores/useGameStore';
 
-const PlayerBoard = ({ player, isActive, currentPlayer, winner, draw }) => {
-  let message = '';
-  let messageClass = '';
+const PlayerBoard = ({ player }) => {
+  const currentPlayer = useGameStore((store) => store.currentPlayer);
+  const winner = useGameStore((store) => store.winner);
+  const draw = useGameStore((store) => store.draw);
+  const isActive = currentPlayer === player && !winner && !draw;
 
-  if (winner) {
-    message = winner === player ? 'You Win!' : 'You Lose!';
-    messageClass = winner === player ? 'win' : 'lose';
-  } else if (draw) {
-    message = "It's a Draw!";
-    messageClass = 'draw';
-  } else {
-    // Display turn message if game is ongoing
-    message = isActive ? 'Your Turn' : "Opponent's Turn";
-    messageClass = 'turn';
-  }
+  const { messageClass, message } = getWinnerMessages(winner, player, draw, currentPlayer);
 
   return (
     <div className={`player-board ${isActive ? 'active' : 'inactive'}`}>

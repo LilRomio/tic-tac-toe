@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect } from 'react';
 import './GameBoard.scss';
 import { useGameStore } from '../../stores/useGameStore';
@@ -7,7 +5,10 @@ import Header from '../Header/Header';
 import PlayerBoard from '../PlayerBoard/PlayerBoard';
 
 const GameBoard = () => {
-  const { currentPlayer, winner, draw, resetGame } = useGameStore();
+  const currentPlayer = useGameStore((store) => store.currentPlayer);
+  const winner = useGameStore((store) => store.winner);
+  const draw = useGameStore((store) => store.draw);
+  const resetGame = useGameStore((store) => store.resetGame);
 
   useEffect(() => {
     let resetTimer;
@@ -26,20 +27,8 @@ const GameBoard = () => {
       <Header />
 
       <div className="content">
-        <PlayerBoard
-          player="X"
-          isActive={currentPlayer === 'X' && !winner && !draw}
-          currentPlayer={currentPlayer}
-          winner={winner}
-          draw={draw}
-        />
-        <PlayerBoard
-          player="O"
-          isActive={currentPlayer === 'O' && !winner && !draw}
-          currentPlayer={currentPlayer}
-          winner={winner}
-          draw={draw}
-        />
+        <PlayerBoard player="X" />
+        <PlayerBoard player="O" />
       </div>
     </div>
   );
