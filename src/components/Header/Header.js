@@ -12,7 +12,7 @@ const Header = ({ resetGame, scores }) => {
             Score: <span>{scores.X}</span>:<span>{scores.O}</span>
           </div>
           <button onClick={resetGame} className="reset-button">
-            Reset
+            Reset Score
           </button>
           <div>Player 2 </div>
         </div>

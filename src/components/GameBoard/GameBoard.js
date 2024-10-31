@@ -57,9 +57,14 @@ const GameBoard = (winningLineClass) => {
     setDraw(false);
   };
 
+  const resetAll = () => {
+    resetGame();
+    setScores({ X: 0, O: 0 });
+  };
+
   return (
     <div className="game">
-      <Header resetGame={resetGame} scores={scores} currentPlayer={currentPlayer} />
+      <Header resetGame={resetAll} scores={scores} currentPlayer={currentPlayer} />
 
       <div className="content">
         <PlayerBoard
