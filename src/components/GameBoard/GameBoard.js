@@ -5,7 +5,6 @@ import Header from '../Header/Header';
 import PlayerBoard from '../PlayerBoard/PlayerBoard';
 
 const GameBoard = () => {
-  const currentPlayer = useGameStore((store) => store.currentPlayer);
   const winner = useGameStore((store) => store.winner);
   const draw = useGameStore((store) => store.draw);
   const resetGame = useGameStore((store) => store.resetGame);
