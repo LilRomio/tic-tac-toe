@@ -5,10 +5,10 @@ import { useGameStore } from '../../stores/useGameStore';
 import './Header.scss';
 
 const Header = () => {
-  const { scores, resetAll } = useGameStore();
+  const scores = useGameStore((store) => store.scores);
+  const resetAll = useGameStore((store) => store.resetAll);
   return (
     <header className="header">
-      <h1>Tic Tac Toe</h1>
       <div className="score-board">
         <div className="board-content">
           <div>Player 1 </div>

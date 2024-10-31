@@ -1,9 +1,11 @@
 import { create } from 'zustand';
+import { getWinningCombination } from '../utilities/getWinningCombination';
 
 export const useGameStore = create((set) => ({
   board: Array(9).fill(''),
   currentPlayer: 'X',
   winner: null,
+  winningCombo: null,
   draw: false,
   scores: { X: 0, O: 0 },
 
@@ -12,15 +14,16 @@ export const useGameStore = create((set) => ({
       if (state.winner || state.draw || state.board[index] !== '') return;
 
       const updatedBoard = state.board.map((val, i) => (i === index ? state.currentPlayer : val));
-      const gameWinner = checkWinner(updatedBoard);
+      const winningCombo = getWinningCombination(updatedBoard);
 
-      if (gameWinner) {
+      if (winningCombo) {
         return {
           board: updatedBoard,
-          winner: gameWinner,
+          winner: state.currentPlayer,
+          winningCombo: winningCombo,
           scores: {
             ...state.scores,
-            [gameWinner]: state.scores[gameWinner] + 1,
+            [state.currentPlayer]: state.scores[state.currentPlayer] + 1,
           },
         };
       }
@@ -40,6 +43,7 @@ export const useGameStore = create((set) => ({
       board: Array(9).fill(''),
       currentPlayer: 'X',
       winner: null,
+      winningCombo: null,
       draw: false,
     }),
 
@@ -48,26 +52,8 @@ export const useGameStore = create((set) => ({
       board: Array(9).fill(''),
       currentPlayer: 'X',
       winner: null,
+      winningCombo: null,
       draw: false,
       scores: { X: 0, O: 0 },
     }),
 }));
-
-const checkWinner = (board) => {
-  const winningCombinations = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  return (
-    winningCombinations
-      .map(([a, b, c]) => board[a] && board[a] === board[b] && board[a] === board[c] && board[a])
-      .find(Boolean) || null
-  );
-};

@@ -1,6 +1,7 @@
 import React from 'react';
 import Square from '../Square/Square';
 import './PlayerBoard.scss';
+import WinningLine from '../WinningLine/WinningLine';
 
 const PlayerBoard = ({ player, isActive, currentPlayer, winner, draw }) => {
   let message = '';
@@ -30,6 +31,7 @@ const PlayerBoard = ({ player, isActive, currentPlayer, winner, draw }) => {
             })}
           </div>
         ))}
+        <WinningLine />
       </div>
     </div>
   );
