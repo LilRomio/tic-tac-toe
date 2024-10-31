@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './GameBoard.scss';
 import { checkWinner } from '../CheckWinner';
 import Header from '../Header/Header';
@@ -13,6 +13,18 @@ const GameBoard = (winningLineClass) => {
   const [winner, setWinner] = useState(null);
   const [draw, setDraw] = useState(false);
   const [scores, setScores] = useState({ X: 0, O: 0 });
+
+  useEffect(() => {
+    let resetTimer;
+
+    if (winner || draw) {
+      resetTimer = setTimeout(() => {
+        resetGame();
+      }, 5000);
+    }
+
+    return () => clearTimeout(resetTimer);
+  }, [winner, draw]);
 
   const chooseSquare = (index) => {
     if (board[index] === '' && !winner && !draw) {
@@ -50,7 +62,6 @@ const GameBoard = (winningLineClass) => {
       <Header resetGame={resetGame} scores={scores} currentPlayer={currentPlayer} />
 
       <div className="content">
-        {/* Player X's Board */}
         <PlayerBoard
           player="X"
           currentPlayer={currentPlayer}
@@ -60,7 +71,6 @@ const GameBoard = (winningLineClass) => {
           draw={draw}
         />
 
-        {/* Player O's Board */}
         <PlayerBoard
           player="O"
           currentPlayer={currentPlayer}
