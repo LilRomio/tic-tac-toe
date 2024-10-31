@@ -2,12 +2,12 @@
 
 import React, { useEffect } from 'react';
 import './GameBoard.scss';
-import { useGameStore } from '../stores/useGameStore';
+import { useGameStore } from '../../stores/useGameStore';
 import Header from '../Header/Header';
 import PlayerBoard from '../PlayerBoard/PlayerBoard';
-import WinningLine from '../WinningLine/WinningLine';
-const GameBoard = (winningLineClass) => {
-  const { board, currentPlayer, winner, draw, scores, chooseSquare, resetGame, resetAll } = useGameStore();
+
+const GameBoard = () => {
+  const { currentPlayer, winner, draw, resetGame } = useGameStore();
 
   useEffect(() => {
     let resetTimer;
@@ -23,29 +23,24 @@ const GameBoard = (winningLineClass) => {
 
   return (
     <div className="game">
-      <Header resetGame={resetAll} scores={scores} currentPlayer={currentPlayer} />
+      <Header />
 
       <div className="content">
         <PlayerBoard
           player="X"
+          isActive={currentPlayer === 'X' && !winner && !draw}
           currentPlayer={currentPlayer}
-          board={board}
-          chooseSquare={chooseSquare}
           winner={winner}
           draw={draw}
         />
-
         <PlayerBoard
           player="O"
+          isActive={currentPlayer === 'O' && !winner && !draw}
           currentPlayer={currentPlayer}
-          board={board}
-          chooseSquare={chooseSquare}
           winner={winner}
           draw={draw}
         />
       </div>
-
-      <WinningLine winningLineClass={winningLineClass} />
     </div>
   );
 };

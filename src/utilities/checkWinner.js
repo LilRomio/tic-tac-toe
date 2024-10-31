@@ -1,3 +1,5 @@
+'use client';
+
 export const checkWinner = (board) => {
   const winningCombinations = [
     [0, 1, 2],

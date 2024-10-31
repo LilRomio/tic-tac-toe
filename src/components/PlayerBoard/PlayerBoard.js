@@ -1,9 +1,8 @@
-// PlayerBoard.js
 import React from 'react';
 import Square from '../Square/Square';
 import './PlayerBoard.scss';
 
-const PlayerBoard = ({ player, currentPlayer, board, chooseSquare, winner, draw }) => {
+const PlayerBoard = ({ player, isActive, currentPlayer, winner, draw }) => {
   let message = '';
   let messageClass = '';
 
@@ -14,26 +13,20 @@ const PlayerBoard = ({ player, currentPlayer, board, chooseSquare, winner, draw 
     message = "It's a Draw!";
     messageClass = 'draw';
   } else {
-    message = currentPlayer === player ? 'Your Turn' : "Opponent's Turn";
+    // Display turn message if game is ongoing
+    message = isActive ? 'Your Turn' : "Opponent's Turn";
     messageClass = 'turn';
   }
 
   return (
-    <div className="player-board">
+    <div className={`player-board ${isActive ? 'active' : 'inactive'}`}>
       <div className={`status-message ${messageClass}`}>{message}</div>
       <div className="board">
         {[0, 1, 2].map((row) => (
           <div className="row" key={row}>
             {[0, 1, 2].map((col) => {
               const index = row * 3 + col;
-              return (
-                <Square
-                  key={index}
-                  chooseSquare={() => currentPlayer === player && chooseSquare(index)}
-                  val={board[index]}
-                  disabled={currentPlayer !== player || winner || draw}
-                />
-              );
+              return <Square key={index} index={index} isDisabled={!isActive} />;
             })}
           </div>
         ))}
