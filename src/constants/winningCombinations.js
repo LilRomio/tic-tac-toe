@@ -1,3 +1,4 @@
+//  All possible winning combinations in a Tic-Tac-Toe game
 export const WINNING_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],

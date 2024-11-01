@@ -1,3 +1,5 @@
+// A help function to display message
+
 export const getWinnerMessages = (winner, player, draw, currentPlayer) => {
   let message = '';
   let messageClass = '';

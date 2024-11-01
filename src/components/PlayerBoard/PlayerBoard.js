@@ -5,12 +5,15 @@ import WinningLine from '../WinningLine/WinningLine';
 import { getWinnerMessages } from '../../utilities/getWinnerMessages';
 import { useGameStore } from '../../stores/useGameStore';
 
+// PlayerBoard component represents the game board for each player
 const PlayerBoard = ({ player }) => {
+  // Access the current player, winner, and draw state from the game store
   const currentPlayer = useGameStore((store) => store.currentPlayer);
   const winner = useGameStore((store) => store.winner);
   const draw = useGameStore((store) => store.draw);
+  // Determine if the current board is active based on player turn and game state
   const isActive = currentPlayer === player && !winner && !draw;
-
+  // Get appropriate message and CSS class based on game state (win, lose, draw, or turn) using a utility function
   const { messageClass, message } = getWinnerMessages(winner, player, draw, currentPlayer);
 
   return (

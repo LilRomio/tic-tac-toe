@@ -1,7 +1,11 @@
 import React from 'react';
 import './ScoreBoard.scss';
+import { useGameStore } from '../../stores/useGameStore';
 
-const ScoreBoard = ({ scores }) => {
+// ScoreBoard component displays the current scores for both players
+const ScoreBoard = () => {
+  const scores = useGameStore((store) => store.scores);
+
   const { xScore, oScore } = scores;
 
   return (
