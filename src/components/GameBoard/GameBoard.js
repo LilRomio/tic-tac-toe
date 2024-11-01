@@ -3,6 +3,7 @@ import './GameBoard.scss';
 import { useGameStore } from '../../stores/useGameStore';
 import Header from '../Header/Header';
 import PlayerBoard from '../PlayerBoard/PlayerBoard';
+import ChatBox from '../Chat/ChatBox';
 
 // Main GameBoard component that orchestrates the overall game view and logic
 const GameBoard = () => {
@@ -29,8 +30,14 @@ const GameBoard = () => {
       <Header />
 
       <div className="content">
-        <PlayerBoard player="X" />
-        <PlayerBoard player="O" />
+        <div className="player-container">
+          <PlayerBoard player="X" />
+          <ChatBox player="Player 1" />
+        </div>
+        <div className="player-container">
+          <PlayerBoard player="O" />
+          <ChatBox player="Player 2" />
+        </div>
       </div>
     </div>
   );

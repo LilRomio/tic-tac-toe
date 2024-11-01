@@ -12,6 +12,12 @@ export const useGameStore = create((set) => ({
   draw: false,
   // Score tracking for each player
   scores: { X: 0, O: 0 },
+  messages: [],
+
+  sendMessage: (player, text) =>
+    set((state) => ({
+      messages: [...state.messages, { player, text, timestamp: new Date().toLocaleTimeString() }],
+    })),
 
   chooseSquare: (index) =>
     set((state) => {
