@@ -10,7 +10,10 @@ const Square = ({ index, isDisabled }) => {
   const chooseSquare = useGameStore((state) => state.chooseSquare);
 
   return (
-    <div className={`square ${isDisabled ? 'disabled' : ''}`} onClick={() => !isDisabled && chooseSquare(index)}>
+    <div
+      className={`square ${isDisabled ? 'disabled' : ''}`}
+      onClick={() => !isDisabled && !val && chooseSquare(index)}
+    >
       {val}
     </div>
   );
